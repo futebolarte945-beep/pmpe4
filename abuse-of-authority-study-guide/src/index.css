@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0b0a07;
+  --color-ink-2: #12100b;
+  --color-ink-3: #1a1710;
+  --color-line: #29241a;
+  --color-line-2: #3a3325;
+  --color-paper: #ece2c9;
+  --color-paper-2: #f6efdd;
+  --color-fade: #a89a7c;
+  --color-faint: #6f6450;
+  --color-gold: #e2b03c;
+  --color-gold-2: #f3ca5e;
+  --color-blood: #e05b4b;
+  --color-blood-2: #f08172;
+  --color-mint: #4fd08a;
+  --color-mint-2: #8fe3b4;
+  --color-skyy: #5fa8e8;
+  --color-skyy-2: #93c7f2;
+  --color-viol: #b48ef2;
+  --color-viol-2: #d3bcf8;
+
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: #141007;
+}
+
+/* ---------- texturas ---------- */
+.noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.55;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.28'/%3E%3C/svg%3E");
+}
+
+.paper-box {
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 40%),
+    var(--color-paper-2);
+  color: #231d10;
+  box-shadow:
+    0 0 0 1px rgba(35, 29, 16, 0.15),
+    0 24px 50px -24px rgba(0, 0, 0, 0.65);
+}
+
+.paper-lines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 1.72rem,
+    rgba(35, 29, 16, 0.07) 1.72rem,
+    rgba(35, 29, 16, 0.07) calc(1.72rem + 1px)
+  );
+}
+
+.tape {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--color-blood) 0 12px,
+    #171310 12px 24px
+  );
+}
+
+.tape-gold {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--color-gold) 0 12px,
+    #171310 12px 24px
+  );
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(236, 226, 201, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(236, 226, 201, 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* ---------- scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0a07;
+}
+::-webkit-scrollbar-thumb {
+  background: #2c2618;
+  border-radius: 8px;
+  border: 2px solid #0b0a07;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold);
+}
+
+/* ---------- reveals ---------- */
+.rv {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--rv-delay, 0ms);
+  will-change: opacity, transform;
+}
+.rv.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- destaque inline nos bullets ---------- */
+.hl {
+  color: var(--color-gold-2);
+  font-weight: 600;
+}
+b,
+strong {
+  color: inherit;
+  font-weight: 650;
+}
+
+/* ---------- carimbo de veto ---------- */
+.stamp {
+  font-family: var(--font-mono);
+  letter-spacing: 0.22em;
+  border: 2px solid currentColor;
+  border-radius: 4px;
+  padding: 0.15rem 0.6rem 0.2rem;
+  transform: rotate(-6deg);
+  display: inline-block;
+  text-transform: uppercase;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='r'%3E%3CfeTurbulence baseFrequency='0.6' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23r)'/%3E%3C/svg%3E");
+  mask-size: 260px;
+}
+
+/* ---------- marquee das bancas ---------- */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee {
+  animation: marquee 26s linear infinite;
+}
+
+/* ---------- brilho suave do herói ---------- */
+@keyframes pulse-gold {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.pulse-gold {
+  animation: pulse-gold 5s ease-in-out infinite;
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+.float-slow {
+  animation: float-slow 9s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .marquee,
+  .float-slow,
+  .pulse-gold {
+    animation: none;
+  }
+}
